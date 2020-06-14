@@ -43,10 +43,20 @@ def setup(model="default pipline"):
         "finbert": lambda: setupAuto("ipuneetrathore/bert-base-cased-finetuned-finBERT")
     }.get(model, lambda: setupDefaultSentimentAnalysis())()
 
-def main():
+def result2Str(model, result):
+    label = result[0]['label']
+    score = result[0]['score']
+    labelStr = {
+        "finbert": {
+            "LABEL_0": "NEGATIVE",
+            "LABEL_1": "NEUTRAL",
+            "LABEL_2": "POSITIVE"
+        }.get(label, label)
+    }.get(model, label)
 
-    def newline(): print()
-    def result(f, j, s:str): f("Result: ", j(s))
+    return labelStr + " {:.2%}".format(score)
+
+def main():
 
     negativeStr = "This film is terrible."
     positiveStr = "This film is great."
@@ -56,7 +66,7 @@ def main():
     print("Torch ", torch.__version__)
     print("Tensorflow ", tensorflow.__version__)
     print("Transformers ", transformers.__version__)
-    newline()
+    print()
 
     models = [
         "default", "bert", "imdb", "finbert", "xlnet"
@@ -64,10 +74,10 @@ def main():
 
     for model in models:
         nlp = setup(model)
-        result(print, nlp, negativeStr)
-        result(print, nlp, positiveStr)
-        result(print, nlp, neutralStr)
-        newline()
+        print("Result: ", result2Str(model, nlp(negativeStr)))
+        print("Result: ", result2Str(model, nlp(positiveStr)))
+        print("Result: ", result2Str(model, nlp(neutralStr)))
+        print()
 
 
 if __name__ == "__main__":
