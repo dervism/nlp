@@ -47,9 +47,12 @@ python -c "import torch;print(torch.rand(5, 3))"
 Run the program:
 
 ```
-python xlnet.py
+python nlp.sa.transformers.py
 ```
 
 Find other pre-trained models:
 
 https://huggingface.co/models?filter=text-classification&search=xlnet
+
+Pretraining docs:
+https://towardsdatascience.com/multi-class-sentiment-analysis-using-bert-86657a2af156
