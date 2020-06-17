@@ -8,11 +8,6 @@ from transformers import XLNetTokenizer, XLNetForSequenceClassification
 from transformers import pipeline
 
 
-def readData(filename, f):
-    with open(filename) as file:
-        for line in file: f(line)
-
-
 def setupDefaultSentimentAnalysis() -> TextClassificationPipeline:
     return pipeline(task="sentiment-analysis")
 
@@ -56,7 +51,7 @@ def result2Str(model, result):
 
     return labelStr + " {:.2%}".format(score)
 
-def main():
+def testModels():
 
     negativeStr = "This film is terrible."
     positiveStr = "This film is great."
@@ -69,7 +64,7 @@ def main():
     print()
 
     models = [
-        "default", "bert", "imdb", "finbert", "xlnet"
+        "default", "finbert", "imdb", "bert", "xlnet"
     ]
 
     for model in models:
@@ -80,5 +75,19 @@ def main():
         print()
 
 
+def testDataset():
+    nlp = setup("imdb")
+    with open("./data/output.csv", "w") as output:
+        with open("./data/test.txt") as file:
+            for line in file:
+                print(line)
+                result = nlp(line[1:-1])
+                label = {
+                    "LABEL_0": "NEGATIVE",
+                    "LABEL_1": "POSITIVE"
+                }.get(result[0]['label'], result[0]['label'])
+                output.write(line.strip() + "\t" + label)
+                output.write("\n")
+
 if __name__ == "__main__":
-    main()
+    testModels()
