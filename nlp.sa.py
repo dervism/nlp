@@ -15,6 +15,7 @@ from transformers import pipeline
 
 # import stanza
 
+
 @dataclass
 class SentimentResult:
     sentiment: str

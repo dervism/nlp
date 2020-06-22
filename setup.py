@@ -1,10 +1,10 @@
 from setuptools import setup
 
 setup(
-    name='sentiment',
+    name='sentiment-demo',
     version='0.0.1',
-    packages=[''],
-    url='',
+    packages=['transformers', 'torch', 'torchvision', 'tensorflow', 'openpyxl', 'stanza'],
+    url='https://github.com/dervism/nlp',
     license='MIT',
     author='dervism',
     author_email='',
