@@ -29,12 +29,10 @@ class SentimentResultList:
 def setupDefaultSentimentAnalysis() -> TextClassificationPipeline:
     return pipeline(task="sentiment-analysis")
 
-
 def setupXLNetSentimentAnalysis(modelName):
     tokenizer = XLNetTokenizer.from_pretrained(modelName)
     model = XLNetForSequenceClassification.from_pretrained(modelName)
     return pipeline(task="sentiment-analysis", model=model, tokenizer=tokenizer)
-
 
 def setupBertSentimentAnalysis(modelName):
     tokenizer = BertTokenizer.from_pretrained(modelName)
@@ -94,7 +92,7 @@ def label2Str(model, result):
             "LABEL_1": "LABEL_1",
             "LABEL_2": "LABEL_2",
             "LABEL_3": "LABEL_3",
-            "LABEL_4": "LABEL_4",
+            "LABEL_4": "LABEL_4"
         }.get(label, label),
     }.get(model, label)
 
