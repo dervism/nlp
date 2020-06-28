@@ -1,5 +1,10 @@
 from setuptools import setup, find_namespace_packages
 
+from clean import CleanCommand
+
+cmd_classes = {}
+cmd_classes['clean'] = CleanCommand
+
 setup(
     name='sentiment-demo',
     version='0.0.1',
@@ -18,6 +23,8 @@ setup(
     package_data={
         "nlp.sentiment": ["data/*.txt"],
     },
+
+    cmdclass=cmd_classes,
 
     url='https://github.com/dervism/nlp',
     license='MIT',
