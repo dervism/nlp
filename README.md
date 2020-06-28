@@ -1,6 +1,12 @@
 # Python NLP testing app
 
 ### Setup
+Install virtual environment:
+
+```
+python3 -m venv --system-site-packages ./venv
+```
+
 Start virtual environment:
 
 ```
@@ -10,13 +16,19 @@ source ./venv/bin/activate
 Install dependencies:
 
 ```
-pip3 install --upgrade pip setuptools tensorflow torch torchvision transformers openpyxl stanza
+pip3 install -e .
+```
+
+If you get warnings about upgrading pip or setuptools:
+
+```
+pip3 install --upgrade pip setuptools
 ```
 
 Run the program:
 
 ```
-python nlp.sa.py
+venv/bin/python3 src/nlp/sentiment/nlp.sa.py
 ```
 
 ### Resources

@@ -1,3 +1,5 @@
+import argparse
+import logging
 from dataclasses import dataclass
 from typing import List
 
@@ -12,8 +14,17 @@ from transformers import TextClassificationPipeline
 from transformers import XLNetTokenizer, XLNetForSequenceClassification
 from transformers import pipeline
 
-
 # import stanza
+
+
+# root logging config doc
+logging.basicConfig(
+    level=logging.WARNING,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+# app logger
+logger = logging.getLogger("main")
+logger.setLevel(logging.INFO)
 
 
 @dataclass
@@ -115,7 +126,7 @@ def testModels():
     print()
 
     models = [
-        "", "xlnet", "xlnetbase", "bertbase"
+        "default", "xlnet", "xlnetbase", "bertbase"
     ]
 
     for model in models:
@@ -126,17 +137,14 @@ def testModels():
         print()
 
 
-def testDataset():
+def testDataset(model):
     workbook = Workbook()
     sheet = workbook.active
     sentiments = []
 
-    model = "xlnetbase"
-    inputfile = "./data/test.txt"
-
     nlp = setup(model)
-    with open("./data/output.csv", "w") as output:
-        with open(inputfile) as file:
+    with open(outputCSVFile, "w") as output:
+        with open(inputFile, "r") as file:
             for line in file:
                 print(line)
                 result = nlp(line[1:-1])
@@ -155,7 +163,31 @@ def testDataset():
         for sentimentObj in sentimentResultList.sentiments:
             data = [sentimentObj.text, sentimentObj.sentiment, sentimentObj.confidence]
             sheet.append(data)
-        workbook.save(filename="output.xlsx")
+        workbook.save(filename=outputFolder + outputExcelFile)
+
+outputFolder: str = ""
+def setOutputFolder(path):
+    global outputFolder
+    outputFolder = path
+
+outputExcelFile: str = "output.xlsx"
+def setOutputExcelFile(name):
+    global outputExcelFile
+    outputExcelFile = name
+
+outputCSVFile: str = "output.csv"
+def setOutputCSVFile(name):
+    global outputCSVFile
+    outputCSVFile = name
+
+inputFile: str = "./data/test.txt"
+def setInputFile(name):
+    global inputFile
+    inputFile = name
+
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='XLNet Sentiment Analsis')
+    parser.add_argument('--model', type=str, default='xlnetbase')
+    args = parser.parse_args()
     testModels()

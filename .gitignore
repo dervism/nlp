@@ -1,7 +1,9 @@
 .idea
 *.iml
 venv
-log.py
 data.txt
 output.csv
 *.xlsx
+dist
+build
+*.egg-info
