@@ -31,6 +31,27 @@ Run the program:
 venv/bin/python3 src/nlp/sentiment/nlp.sa.py
 ```
 
+### Building source and build dists
+
+Source distribution:
+
+```
+ python3 setup.py sdist
+```
+
+Build distribution:
+
+```
+ python3 setup.py bdist
+```
+
+### Cleaning build output
+
+```
+ python3 setup.py clean
+```
+
+
 ### Resources
 Find other pre-trained models:  
 https://huggingface.co/models?filter=text-classification&search=xlnet
